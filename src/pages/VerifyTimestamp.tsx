@@ -5,15 +5,20 @@ import { FileInfo } from '../components/FileInfo';
 import { verifyTimestamp } from '../utils/timestamp';
 
 export function VerifyTimestamp() {
+  // 選択されたファイルを保持するためのステート
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // 入力されたタイムスタンプを保持するためのステート
   const [inputTimestamp, setInputTimestamp] = useState('');
+  // タイムスタンプの検証結果を保持するためのステート
   const [verificationResult, setVerificationResult] = useState<'success' | 'error' | null>(null);
 
+  // ファイルが選択されたときの処理
   const handleFileSelect = (file: File) => {
     setSelectedFile(file);
     setVerificationResult(null);
   };
 
+  // タイムスタンプを検証する処理
   const handleVerifyTimestamp = () => {
     if (!selectedFile || !inputTimestamp) return;
 
