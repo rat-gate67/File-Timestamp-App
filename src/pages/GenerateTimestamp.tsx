@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FileUpload } from '../components/FileUpload';
 import { TimestampDisplay } from '../components/TimestampDisplay';
 import { Button } from '../components/Button';
-import { FileInfo } from '../components/FileInfo';
+import { DispInfo } from '../components/DispInfo';
 import { generateTimestamp } from '../utils/timestamp';
 
 export function GenerateTimestamp() {
@@ -38,7 +38,7 @@ export function GenerateTimestamp() {
 
       <FileUpload onFileSelect={handleFileSelect} />
 
-      {selectedFile && <FileInfo fileName={selectedFile.name} />}
+      {selectedFile && <DispInfo fileName={selectedFile.name} />}
 
       <Button
         onClick={handleGenerateTimestamp}
