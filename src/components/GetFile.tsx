@@ -1,28 +1,31 @@
-import React, { useCallback } from 'react';
-import { Upload } from 'lucide-react';
+import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { Upload } from 'lucide-react';
 
-interface FileUploadProps {
+interface GetFileProps {
   onFileSelect: (file: File) => void;
 }
 
-export function FileUpload({ onFileSelect }: FileUploadProps) {
+const GetFile: React.FC<GetFileProps> = ({ onFileSelect }) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       onFileSelect(acceptedFiles[0]);
     }
   }, [onFileSelect]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
     <div
       {...getRootProps()}
+      data-testid="dropzone"
       className="border-2 border-dashed border-gray-300 rounded-lg p-16 text-center cursor-pointer hover:border-blue-500 transition-colors"
     >
       <input {...getInputProps()} />
       <div className="flex flex-col items-center gap-6">
-        <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
+        <div 
+            data-testid="upload-icon"
+            className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
           <Upload className="w-10 h-10 text-blue-500" />
         </div>
         <div>
@@ -33,3 +36,5 @@ export function FileUpload({ onFileSelect }: FileUploadProps) {
     </div>
   );
 }
+
+export default GetFile;
