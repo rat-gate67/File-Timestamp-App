@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileUpload } from '../components/FileUpload';
+import GetFile from '../components/GetFile';
 import { TimestampDisplay } from '../components/TimestampDisplay';
 import { Button } from '../components/Button';
 import { FileInfo } from '../components/FileInfo';
@@ -36,7 +36,7 @@ export function GenerateTimestamp() {
       ファイルをアップロードしタイムスタンプを作成します。このタイムスタンプを使って、特定の時点でのファイルの存在を確認することができます。
       </p>
 
-      <FileUpload onFileSelect={handleFileSelect} />
+      <GetFile onFileSelect={handleFileSelect} />
 
       {selectedFile && <FileInfo fileName={selectedFile.name} />}
 
