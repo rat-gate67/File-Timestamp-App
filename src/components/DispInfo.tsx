@@ -5,7 +5,7 @@ interface FileInfoProps {
   fileName: string;
 }
 
-export function FileInfo({ fileName }: FileInfoProps) {
+export function DispInfo({ fileName }: FileInfoProps) {
   return (
     <div className="mt-4 flex items-center gap-2">
       <FileUp className="w-4 h-4 text-gray-600" />
