@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GetFile from '../components/GetFile';
 import { Button } from '../components/Button';
-import { FileInfo } from '../components/FileInfo';
+import { DispInfo } from '../components/DispInfo';
 import { verifyTimestamp } from '../utils/timestamp';
 
 export function VerifyTimestamp() {
@@ -38,7 +38,7 @@ export function VerifyTimestamp() {
 
       <GetFile onFileSelect={handleFileSelect} />
 
-      {selectedFile && <FileInfo fileName={selectedFile.name} />}
+      {selectedFile && <DispInfo fileName={selectedFile.name} />}
 
       <div className="mt-6">
       <label htmlFor="timestamp" className="block text-sm font-medium text-gray-700 mb-2">
