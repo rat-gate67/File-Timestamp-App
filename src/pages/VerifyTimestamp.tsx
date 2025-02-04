@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FileUpload } from '../components/FileUpload';
+import GetFile from '../components/GetFile';
 import { Button } from '../components/Button';
-import { FileInfo } from '../components/FileInfo';
+import { DispInfo } from '../components/DispInfo';
 import { verifyTimestamp } from '../utils/timestamp';
 
 export function VerifyTimestamp() {
@@ -36,9 +36,9 @@ export function VerifyTimestamp() {
       <p className="text-gray-600 mb-8">
       ファイルをアップロードし、タイムスタンプを入力して、その時点におけるファイルの存在を確認します。      </p>
 
-      <FileUpload onFileSelect={handleFileSelect} />
+      <GetFile onFileSelect={handleFileSelect} />
 
-      {selectedFile && <FileInfo fileName={selectedFile.name} />}
+      {selectedFile && <DispInfo fileName={selectedFile.name} />}
 
       <div className="mt-6">
       <label htmlFor="timestamp" className="block text-sm font-medium text-gray-700 mb-2">
