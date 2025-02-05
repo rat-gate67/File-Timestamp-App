@@ -1,7 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from "axios";
 import fs from "fs";
 import https from "https";
+import dotenv from "dotenv";
 
+dotenv.config();
 // HTTP メソッドの型
 type HttpMethod = 'GET' | 'POST';
 
@@ -19,7 +21,7 @@ interface TapyrusResponse {
 };
 
 const httpsAgent = new https.Agent({
-	cert: fs.readFileSync("/home/File-Timestamp-App/agent/cert.pem"), // クライアント証明書のパス
+	cert: fs.readFileSync(process.env.CLIENT_CERT_PATH as string), // クライアント証明書のパス
 	rejectUnauthorized: true,
 });
 
