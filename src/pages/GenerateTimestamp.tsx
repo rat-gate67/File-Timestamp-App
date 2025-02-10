@@ -3,35 +3,48 @@ import GetFile from '../components/GetFile';
 import { IdDisplay } from '../components/IdDisplay';
 import { Button } from '../components/Button';
 import { DispInfo } from '../components/DispInfo';
-import { generateTimestamp } from '../utils/timestamp';
+// import { generateTimestamp } from '../utils/timestamp';
+
+import { FileTreat } from '../utils/FileTreat';
+import { Tapyrus } from '../utils/Tapyrus';
+import { JsonTreat } from '../utils/JsonTreat';
 
 export function GenerateTimestamp() {
     // 選択されたファイルを保持するためのステート
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // 生成されたタイムスタンプを保持するためのステート
-  const [timestamp, setTimestamp] = useState<string | null>(null);
+  const [id, setId] = useState<string | null>(null);
 
   // ファイルが選択されたときの処理
   const handleFileSelect = (file: File) => {
     setSelectedFile(file);
-    setTimestamp(null);
+    setId(null);
   };
 
-  // タイムスタンプを生成する処理
-  const handleGenerateTimestamp = () => {
+  // IDを生成する処理
+  const handleGenerateTimestamp = async () => {
     if (!selectedFile) return;
 
-    // tapyrusAPIを使ってタイムスタンプを作成する
-    const newTimestamp = generateTimestamp();
+    // tapyrusAPIを使ってIDを作成する
+    const fileTreat = new FileTreat(selectedFile.name, '', '');
+    await fileTreat.createPrefix(selectedFile.name);
+    await fileTreat.createContent(selectedFile);
+    
+    const fileContent = fileTreat.getContent();
+    const filepre = fileTreat.getFilepre();
 
-    // 生成されたタイムスタンプをステートにセットする
-    setTimestamp(newTimestamp);
+    const tapyrus = new Tapyrus("POST","/api/v2/timestamps");
+    const result = await tapyrus.registerTimestamp(fileContent, filepre);
+    const jsonTreat = new JsonTreat(result);
+    const id = jsonTreat.getTimestampId();
+    setId(id.toString());
+    
   };
 
   
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Generate a timestamp</h1>
+      <h1 className="text-3xl font-bold mb-6">Generate a ID</h1>
       <p className="text-gray-600 mb-8">
       ファイルをアップロードしIDを作成します。このIDを使って、特定の時点でのファイルの存在を確認することができます。
       </p>
@@ -48,7 +61,7 @@ export function GenerateTimestamp() {
         Get ID
       </Button>
 
-      <IdDisplay id={} />
+      <IdDisplay id={id} />
     </div>
   );
 }
