@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import GetFile from '../components/GetFile';
-import { TimestampDisplay } from '../components/TimestampDisplay';
+import { IdDisplay } from '../components/IdDisplay';
 import { Button } from '../components/Button';
 import { DispInfo } from '../components/DispInfo';
 import { generateTimestamp } from '../utils/timestamp';
@@ -33,7 +33,7 @@ export function GenerateTimestamp() {
     <div>
       <h1 className="text-3xl font-bold mb-6">Generate a timestamp</h1>
       <p className="text-gray-600 mb-8">
-      ファイルをアップロードしタイムスタンプを作成します。このタイムスタンプを使って、特定の時点でのファイルの存在を確認することができます。
+      ファイルをアップロードしIDを作成します。このIDを使って、特定の時点でのファイルの存在を確認することができます。
       </p>
 
       <GetFile onFileSelect={handleFileSelect} />
@@ -45,10 +45,10 @@ export function GenerateTimestamp() {
         disabled={!selectedFile}
         className="mt-6"
       >
-        Create timestamp
+        Get ID
       </Button>
 
-      <TimestampDisplay timestamp={timestamp} />
+      <IdDisplay id={} />
     </div>
   );
 }
