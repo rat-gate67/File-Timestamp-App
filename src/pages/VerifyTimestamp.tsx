@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import GetFile from '../components/GetFile';
 import { Button } from '../components/Button';
 import { DispInfo } from '../components/DispInfo';
@@ -7,8 +7,8 @@ import { verifyTimestamp } from '../utils/timestamp';
 export function VerifyTimestamp() {
   // 選択されたファイルを保持するためのステート
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // 入力されたタイムスタンプを保持するためのステート
-  const [inputTimestamp, setInputTimestamp] = useState('');
+  // 入力されたIDを保持するためのステート
+  const [inputId, setInputId] = useState<string>('');
   // タイムスタンプの検証結果を保持するためのステート
   const [verificationResult, setVerificationResult] = useState<'success' | 'error' | null>(null);
 
@@ -18,13 +18,13 @@ export function VerifyTimestamp() {
     setVerificationResult(null);
   };
 
-  // タイムスタンプを検証する処理
+  // IDを検証する処理
   const handleVerifyTimestamp = () => {
-    if (!selectedFile || !inputTimestamp) return;
+    if (!selectedFile || !inputId) return;
 
     // tapyrusAPIを使ってタイムスタンプを検証する
 
-    const result = verifyTimestamp(inputTimestamp);
+    const result = verifyTimestamp(inputId);
 
     
     setVerificationResult(result ? 'success' : 'error');
@@ -34,7 +34,7 @@ export function VerifyTimestamp() {
     <div>
       <h1 className="text-3xl font-bold mb-6">Verify the file timestamp</h1>
       <p className="text-gray-600 mb-8">
-      ファイルをアップロードし、タイムスタンプを入力して、その時点におけるファイルの存在を確認します。      </p>
+      ファイルをアップロードし、IDを入力して、その時点におけるファイルの存在を確認します。      </p>
 
       <GetFile onFileSelect={handleFileSelect} />
 
@@ -47,8 +47,8 @@ export function VerifyTimestamp() {
       <input
         type="text"
         id="timestamp"
-        value={inputTimestamp}
-        onChange={(e) => setInputTimestamp(e.target.value)}
+        value={inputId}
+        onChange={(e) => setInputId(e.target.value)}
         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         placeholder="YYYY-MM-DD HH:mm:ss"
       />
@@ -56,7 +56,7 @@ export function VerifyTimestamp() {
 
       <Button
       onClick={handleVerifyTimestamp}
-      disabled={!selectedFile || !inputTimestamp}
+      disabled={!selectedFile || !inputId}
       className="mt-6"
       >
       Verify timestamp
