@@ -1,21 +1,20 @@
 services:
   timestamp:
-    container_name: File-Timestamp-App     #コンテナ名(任意)
+    container_name: File-Timestamp-App
     build:
-      context: .    #Dockerfileの在処
-      dockerfile: Dockerfile    #Dockerファイルの名前
+      context: .
+      dockerfile: Dockerfile
     volumes:
-    - type: bind    #自分のPC上のディレクトリとDockerコンテナで利用するディレクトリを結合
-      source: .       #自PC上から参照させるディレクトリ 
-      target: /home/File-Timestamp-App    #Docker上のディレクトリ
+    - type: bind
+      source: .
+      target: /home/File-Timestamp-App
     - type: bind
       source: ~/agent
       target: /agent
       read_only: true
     env_file:
       - .env
-    command: /bin/sh    #コンテナ起動時のコマンド
     ports:
-      - 5173:5173     #ポート設定
-    stdin_open: true    #入力端末として自分のターミナルを利用
-    tty: true     #コンテナを起動させ続けるためにtrue
+      - 5173:5173
+    stdin_open: true
+    tty: true
