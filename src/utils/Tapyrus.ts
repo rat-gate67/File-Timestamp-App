@@ -32,7 +32,7 @@ function getAxiosInstance(): AxiosInstance{
 			baseURL: 'https://wrf5wojx.api.tapyrus.chaintope.com',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': 'Bearer mG553ghd3mA5x3surJHTnDcIBi0nsx7SRT4QWxST94rHhtfit0ZKYAO2QhczJC56',
+				'Authorization': 'Bearer',
 			},
 			httpsAgent,
 		});
