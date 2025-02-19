@@ -70,7 +70,7 @@ export function GenerateTimestamp() {
 
       <IdDisplay id={id} />
       {txid && 
-      <a href={`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`}>トランザクションを表示
+      <a className='mt-6' target='_blank' href={`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`}>トランザクションを表示
       </a>
       }
       
