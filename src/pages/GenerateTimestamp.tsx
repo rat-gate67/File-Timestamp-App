@@ -14,6 +14,9 @@ export function GenerateTimestamp() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // 生成されたタイムスタンプを保持するためのステート
   const [id, setId] = useState<string | null>(null);
+  
+  const [loading, setLoading] = useState(false);
+  const [txid, setTxid] = useState<string | null>(null);
 
   // ファイルが選択されたときの処理
   const handleFileSelect = (file: File) => {
@@ -25,6 +28,8 @@ export function GenerateTimestamp() {
   const handleGenerateTimestamp = async () => {
     if (!selectedFile) return;
 
+    setLoading(true);
+
     // tapyrusAPIを使ってIDを作成する
     const fileTreat = new FileTreat(selectedFile.name, '', '');
     await fileTreat.createPrefix(selectedFile.name);
@@ -35,9 +40,11 @@ export function GenerateTimestamp() {
 
     const tapyrus = new Tapyrus("POST","/api/v2/timestamps");
     const result = await tapyrus.registerTimestamp(fileContent, filepre);
+    setTxid(result.txid);
     const jsonTreat = new JsonTreat(result);
     const id = jsonTreat.getTimestampId();
     setId(id.toString());
+    setLoading(false);
     
   };
 
@@ -55,13 +62,18 @@ export function GenerateTimestamp() {
 
       <Button
         onClick={handleGenerateTimestamp}
-        disabled={!selectedFile}
+        disabled={!selectedFile || loading}
         className="mt-6"
       >
-        Get ID
+        {loading ? 'Generating...' : 'Generate ID'}
       </Button>
 
       <IdDisplay id={id} />
+      {txid && 
+      <a href={`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`}>トランザクションを表示
+      </a>
+      }
+      
     </div>
   );
 }
