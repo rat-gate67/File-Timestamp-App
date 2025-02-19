@@ -9,6 +9,7 @@ import { FileTreat } from '../utils/FileTreat';
 import { Tapyrus } from '../utils/Tapyrus';
 import { JsonTreat } from '../utils/JsonTreat';
 
+
 export function GenerateTimestamp() {
     // 選択されたファイルを保持するためのステート
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -70,7 +71,16 @@ export function GenerateTimestamp() {
 
       <IdDisplay id={id} />
       {txid && 
-      <a className='mt-6' target='_blank' href={`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`}>トランザクションを表示
+      <a 
+        className='mt-6 cursor-pointer' 
+        onClick={(e) => {
+          e.preventDefault();
+          setTimeout(() => {
+        window.open(`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`, '_blank');
+          }, 1000);
+        }}
+      >
+        トランザクションを表示
       </a>
       }
       
