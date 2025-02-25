@@ -77,10 +77,11 @@ export function GenerateTimestamp() {
           e.preventDefault();
           setTimeout(() => {
         window.open(`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`, '_blank');
-          }, 1000);
+          }, 2000);
         }}
       >
-        トランザクションを表示
+        トランザクションを表示 <br />
+        {/* https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid} */}
       </a>
       }
       
