@@ -11,7 +11,7 @@ export function VerifyTimestamp() {
   // 入力されたIDを保持するためのステート
   const [inputId, setInputId] = useState<string>('');
   // タイムスタンプの検証結果を保持するためのステート
-  const [verificationResult, setVerificationResult] = useState<'success' | 'unsuccess' | 'none_id' | 'unconfirmed' | 'error' | null>(null);
+  const [verificationResult, setVerificationResult] = useState<'success' | 'unsuccess'  | 'unconfirmed' | 'error' | null>(null);
   // ブロックのタイムスタンプを保持するためのステート
   const [blockTime, setBlockTime] = useState<number | null>(null);
   
@@ -34,12 +34,6 @@ export function VerifyTimestamp() {
     try {
       const tapyrus = new Tapyrus("GET","/api/v2/timestamps");
       const result = await tapyrus.getTimestamp(inputId);
-
-      if (result === null) {
-        setVerificationResult('none_id');
-        setLoading(false);
-        return;
-      }
 
     setTxid(result.txid);
 
@@ -106,15 +100,10 @@ export function VerifyTimestamp() {
 
       {verificationResult === 'error' && (
       <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-        Invalid format or verification failed.
+        Invalid ID or verification failed.
       </div>
       )}
 
-      {verificationResult === 'none_id' && (
-      <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-        ID not found.
-      </div>
-      )}
 
       {verificationResult === 'unconfirmed' && (
       <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-700">
@@ -129,11 +118,14 @@ export function VerifyTimestamp() {
       )}
 
       {verificationResult === 'success' && (
-      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-        Timestamp verification succeeded.
-        <br />
-        Block time: {blockTime ? new Date(blockTime * 1000).toString() : ''}
-      </div>
+      <div  className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+          <div>
+            Timestamp verification succeeded.
+          </div>
+          <div>
+            Block time: {blockTime ? new Date(blockTime * 1000).toString() : ''}
+          </div>
+        </div>
       )}
       {txid && 
       <a 
