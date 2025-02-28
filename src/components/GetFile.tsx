@@ -21,7 +21,10 @@ const GetFile: React.FC<GetFileProps> = ({ onFileSelect }) => {
       data-testid="dropzone"
       className="border-2 border-dashed border-gray-300 rounded-lg p-16 text-center cursor-pointer hover:border-blue-500 transition-colors"
     >
-      <input {...getInputProps()} />
+      <input 
+      {...getInputProps()} 
+      data-testid="file-input"
+      />
       <div className="flex flex-col items-center gap-6">
         <div 
             data-testid="upload-icon"
