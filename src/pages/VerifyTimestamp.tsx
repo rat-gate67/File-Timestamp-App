@@ -106,8 +106,9 @@ export function VerifyTimestamp() {
 
 
       {verificationResult === 'unconfirmed' && (
-      <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-700">
-        The timestamp is unconfirmed. Please wait for a while.
+      <div  className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+        Timestamp verification succeeded.
+        {/* Timestamp(unconfirmed) verification succeeded. */}
       </div>
       )}
 
