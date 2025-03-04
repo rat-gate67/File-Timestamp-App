@@ -77,7 +77,7 @@ export class Tapyrus {
     } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError;
-          console.error("Axios error while registering timestamp:", AxiosError);
+          console.error("Axios error while regeistering timestamp:", AxiosError);
                 if (axiosError.response) {
                     console.error("Response data:", axiosError.response.data)
                 }
@@ -86,5 +86,31 @@ export class Tapyrus {
           		throw error; // エラーハンドリングを呼び出し側に委ねる
             }
     }
+  }
+
+  public async getTimestamp(id: string): Promise<TapyrusResponse>{
+  
+    const config: AxiosRequestConfig = {
+      method: 'GET',
+      url: `${this._url}/${id}`,
+    };
+
+    try {
+      const response = await getAxiosInstance().request(config);
+      console.log(response.data);
+      return response.data; // サーバーからのレスポンスを返す
+    } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                const axiosError = error as AxiosError;
+          console.error("Axios error while getting timestamp:", AxiosError);
+                if (axiosError.response) {
+                    console.error("Response data:", axiosError.response.data)
+                }
+            } else {
+                    console.error("Unexpected error:", error);
+          		throw error; // エラーハンドリングを呼び出し側に委ねる
+            }
+    }
+  
   }
 }
