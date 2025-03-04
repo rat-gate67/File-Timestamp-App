@@ -9,11 +9,15 @@ import { FileTreat } from '../utils/FileTreat';
 import { Tapyrus } from '../utils/Tapyrus';
 import { JsonTreat } from '../utils/JsonTreat';
 
+
 export function GenerateTimestamp() {
     // 選択されたファイルを保持するためのステート
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // 生成されたタイムスタンプを保持するためのステート
   const [id, setId] = useState<string | null>(null);
+  
+  const [loading, setLoading] = useState(false);
+  const [txid, setTxid] = useState<string | null>(null);
 
   // ファイルが選択されたときの処理
   const handleFileSelect = (file: File) => {
@@ -25,6 +29,8 @@ export function GenerateTimestamp() {
   const handleGenerateTimestamp = async () => {
     if (!selectedFile) return;
 
+    setLoading(true);
+
     // tapyrusAPIを使ってIDを作成する
     const fileTreat = new FileTreat(selectedFile.name, '', '');
     await fileTreat.createPrefix(selectedFile.name);
@@ -35,9 +41,11 @@ export function GenerateTimestamp() {
 
     const tapyrus = new Tapyrus("POST","/api/v2/timestamps");
     const result = await tapyrus.registerTimestamp(fileContent, filepre);
+    setTxid(result.txid);
     const jsonTreat = new JsonTreat(result);
     const id = jsonTreat.getTimestampId();
     setId(id.toString());
+    setLoading(false);
     
   };
 
@@ -55,13 +63,28 @@ export function GenerateTimestamp() {
 
       <Button
         onClick={handleGenerateTimestamp}
-        disabled={!selectedFile}
+        disabled={!selectedFile || loading}
         className="mt-6"
       >
-        Get ID
+        {loading ? 'Generating...' : 'Generate ID'}
       </Button>
 
       <IdDisplay id={id} />
+      {txid && 
+      <a 
+        className='mt-6 cursor-pointer' 
+        onClick={(e) => {
+          e.preventDefault();
+          setTimeout(() => {
+        window.open(`https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid}`, '_blank');
+          }, 2000);
+        }}
+      >
+        トランザクションを表示 <br />
+        {/* https://testnet-explorer.tapyrus.dev.chaintope.com/tx/${txid} */}
+      </a>
+      }
+      
     </div>
   );
 }
